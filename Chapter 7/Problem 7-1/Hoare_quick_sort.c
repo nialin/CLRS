@@ -5,10 +5,10 @@
 
 void exchange(int *a, int *b);
 
-int partition(int *arr, int low, int high);
+int hoare_partition(int *arr, int low, int high);
 void quick_sort(int *arr, int low, int high);
 
-void list_show(int *arr, int len);
+void list_show(int *arr, int cnt);
 
 
 void exchange(int *a, int *b)
@@ -20,18 +20,22 @@ void exchange(int *a, int *b)
 	*b = tmp;
 }
 
-int partition(int *arr, int low, int high)
+int hoare_partition(int *arr, int low, int high)
 {
-	int i, j;
-	int pivot = arr[high];
+	int pivot = arr[low];
 
-	for(i = j = low; i < high; ++i)
-		if(arr[i] < pivot)
-			exchange(&arr[j++], &arr[i]);
+	while(1) {
+		while(arr[low] < pivot)
+			++low;
 
-	exchange(&arr[j], &arr[high]);
+		while(arr[high] > pivot)
+			--high;
 
-	return j;
+		if(low < high)
+			exchange(&arr[low], &arr[high]);
+		else
+			return high;
+	}
 }
 
 void quick_sort(int *arr, int low, int high)
@@ -39,9 +43,9 @@ void quick_sort(int *arr, int low, int high)
 	int mid;
 
 	if(low < high) {
-		mid = partition(arr, low, high);
+		mid = hoare_partition(arr, low, high);
 
-		quick_sort(arr, low, mid - 1);
+		quick_sort(arr, low, mid);
 		quick_sort(arr, mid + 1, high);
 	}
 }

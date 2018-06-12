@@ -8,7 +8,7 @@
 
 
 #if DEBUG
-int cmp_cnts;
+int cmp_cnt;
 #endif
 
 int *prois, proi, init_proi;
@@ -21,11 +21,11 @@ int random_partition(void *base, int size, int low, int high, int (*compar)(cons
 void _quick_sort(void *base, int size, int low, int high, int (*compar)(const void *, const void *));
 void quick_sort(void *base, int nmemeb, int size, int (*compar)(const void *, const void *));
 
-void list_show(int *arr, int cnts);
+void list_show(int *arr, int cnt);
 
 int proi_cmp(const void *px, const void *py);
 int val_cmp(const void *a, const void *b);
-int *qsort_adversary(int *arr, int cnts);
+int *qsort_adversary(int *arr, int cnt);
 
 
 void exchange(void *a, void *b, int size)
@@ -92,11 +92,11 @@ void quick_sort(void *base, int nmemeb, int size, int (*compar)(const void *, co
 	_quick_sort(base, size, 0, nmemeb - 1, compar);
 }
 
-void list_show(int *arr, int cnts)
+void list_show(int *arr, int cnt)
 {
 	int i;
 
-	for(i = 0; i < cnts; ++i)
+	for(i = 0; i < cnt; ++i)
 		printf("%d ", arr[i]);
 
 	printf("\n");
@@ -125,36 +125,36 @@ int proi_cmp(const void *px, const void *py)
 int val_cmp(const void *a, const void *b)
 {
 #if DEBUG
-	++cmp_cnts;
+	++cmp_cnt;
 #endif
 
 	return *(int *)a - *(int *)b;
 }
 
-int *qsort_adversary(int *arr, int cnts)
+int *qsort_adversary(int *arr, int cnt)
 {
 	int *seq, *rslt, i;
 
-	if(!(seq = malloc(cnts * sizeof(int))))
+	if(!(seq = malloc(cnt * sizeof(int))))
 		exit(ENOMEM);
 
-	if(!(prois = malloc(cnts * sizeof(int))))
+	if(!(prois = malloc(cnt * sizeof(int))))
 		exit(ENOMEM);
 
-	if(!(rslt = malloc(cnts * sizeof(int))))
+	if(!(rslt = malloc(cnt * sizeof(int))))
 		exit(ENOMEM);
 
-	init_proi = cnts - 1;
+	init_proi = cnt - 1;
 
-	for(i = 0; i < cnts; ++i) {
+	for(i = 0; i < cnt; ++i) {
 		seq[i] = i;
 		prois[i] = init_proi;
 	}
 
-	quick_sort(seq, cnts, sizeof(int), proi_cmp);
-	quick_sort(arr, cnts, sizeof(int), val_cmp);
+	quick_sort(seq, cnt, sizeof(int), proi_cmp);
+	quick_sort(arr, cnt, sizeof(int), val_cmp);
 
-	for(i = 0; i < cnts; ++i)
+	for(i = 0; i < cnt; ++i)
 		rslt[seq[i]] = arr[i];
 
 	free(seq);
@@ -165,24 +165,24 @@ int *qsort_adversary(int *arr, int cnts)
 
 int main(int argc, char *argv[])
 {
-	int *arr, *adversary, i, cnts;
+	int *arr, *adversary, i, cnt;
 
-	scanf("%d", &cnts);
+	scanf("%d", &cnt);
 
-	if(!(arr = malloc(cnts * sizeof(int))))
+	if(!(arr = malloc(cnt * sizeof(int))))
 		exit(ENOMEM);
 
-	for(i = 0; i < cnts; ++i)
+	for(i = 0; i < cnt; ++i)
 		scanf("%d", &arr[i]);
 
-	adversary = qsort_adversary(arr, cnts);
-	list_show(adversary, cnts);
+	adversary = qsort_adversary(arr, cnt);
+	list_show(adversary, cnt);
 
 #if DEBUG
-	cmp_cnts = 0;
-	quick_sort(adversary, cnts, sizeof(int), val_cmp);
-	printf("Compare %d times.\n", cmp_cnts);
-	list_show(adversary, cnts);
+	cmp_cnt = 0;
+	quick_sort(adversary, cnt, sizeof(int), val_cmp);
+	printf("Compare %d times.\n", cmp_cnt);
+	list_show(adversary, cnt);
 #endif
 
 	free(arr);

@@ -3,19 +3,23 @@
 #include <errno.h>
 
 
-void insertion_sort(int *arr, int cnt);
+void selection_sort(int *arr, int cnt);
 void list_show(int *arr, int cnt);
 
 
-void insertion_sort(int *arr, int cnt)
+void selection_sort(int *arr, int cnt)
 {
-	int i, j, key;
+	int i, j, min_pos, tmp;
 
-	for(j = 1; j < cnt; ++j) {
-		for(i = j - 1, key = arr[j]; i >= 0 && arr[i] > key; --i)
-			arr[i + 1] = arr[i];
+	for(i = 0; i < cnt - 1; ++i) {
+		for(min_pos = i, j = i + 1; j < cnt; ++j) {
+			if(arr[j] < arr[min_pos])
+				min_pos = j;
+		}
 
-		arr[i + 1] = key;
+		tmp = arr[min_pos];
+		arr[min_pos] = arr[i];
+		arr[i] = tmp;
 	}
 }
 
@@ -41,7 +45,7 @@ int main(int argc, char *argv[])
 	for(i = 0; i < cnt; ++i)
 		scanf("%d", &arr[i]);
 
-	insertion_sort(arr, cnt);
+	selection_sort(arr, cnt);
 
 	list_show(arr, cnt);
 

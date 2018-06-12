@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <errno.h>
 
 
@@ -22,8 +23,22 @@ void exchange(int *a, int *b)
 
 int partition(int *arr, int low, int high)
 {
-	int i, j;
-	int pivot = arr[high];
+	int i, j, indices[3];
+	int pivot;
+
+	srand(time(NULL));
+
+	for(i = 0; i < 3; ++i)
+		indices[i] = rand() % (high - low + 1) + low;
+
+	if(((arr[indices[0]] - arr[indices[1]]) ^ (arr[indices[0]] - arr[indices[2]])) < 0)
+		exchange(&arr[indices[0]], &arr[high]);
+	else if(((arr[indices[1]] - arr[indices[0]]) ^ (arr[indices[1]] - arr[indices[2]])) < 0)
+		exchange(&arr[indices[1]], &arr[high]);
+	else
+		exchange(&arr[indices[2]], &arr[high]);
+
+	pivot = arr[high];
 
 	for(i = j = low; i < high; ++i)
 		if(arr[i] < pivot)

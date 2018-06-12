@@ -3,19 +3,39 @@
 #include <errno.h>
 
 
+void insert(int *arr, int cnt, int e);
 void insertion_sort(int *arr, int cnt);
+
 void list_show(int *arr, int cnt);
 
 
+/*
+ * INSERT(A, n, e)
+ *	for i <- n to 1 and A[i] > e
+ *		do A[i + 1] <- A[i]
+ * 	A[i + 1] <- e
+ */
+void insert(int *arr, int cnt, int e)
+{
+	int i;
+
+	for(i = cnt - 1; i >= 0 && arr[i] > e; --i)
+		arr[i + 1] = arr[i];
+
+	arr[i + 1] = e;
+}
+
+/*
+ * INSERTION-SORT(A, n)
+ *	if n > 1
+ *		then INSERTION-SORT(A, n - 1)
+ *			 INSERT(A, n - 1, A[n])
+ */
 void insertion_sort(int *arr, int cnt)
 {
-	int i, j, key;
-
-	for(j = 1; j < cnt; ++j) {
-		for(i = j - 1, key = arr[j]; i >= 0 && arr[i] > key; --i)
-			arr[i + 1] = arr[i];
-
-		arr[i + 1] = key;
+	if(cnt > 1) {
+		insertion_sort(arr, cnt - 1);
+		insert(arr, cnt - 1, arr[cnt - 1]);
 	}
 }
 

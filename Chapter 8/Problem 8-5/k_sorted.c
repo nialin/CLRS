@@ -7,12 +7,15 @@
 
 void merge(int *arr, int low, int mid, int high);
 void merge_sort(int *arr, int low, int high);
+
+void k_sorted(int *arr, int cnt, int k);
+
 void list_show(int *arr, int cnt);
 
 
 void merge(int *arr, int low, int mid, int high)
 {
-	int i, *tmp_1, *tmp_2, cnt_1, cnt_2, index_1, index_2;
+	int i, cnt_1, cnt_2, *tmp_1, *tmp_2, index_1, index_2;
 
 	cnt_1 = mid - low + 1;
 	cnt_2 = high - mid;
@@ -31,7 +34,7 @@ void merge(int *arr, int low, int mid, int high)
 
 	for(i = low, index_1 = 0, index_2 = 0; i <= high; ++i)
 		arr[i] = tmp_1[index_1] < tmp_2[index_2] ? tmp_1[index_1++] : tmp_2[index_2++];
-	
+
 	free(tmp_1);
 	free(tmp_2);
 }
@@ -50,6 +53,24 @@ void merge_sort(int *arr, int low, int high)
 	}
 }
 
+void k_sorted(int *arr, int cnt, int k)
+{
+	int i, j, *tmp;
+
+	if(!(tmp = malloc((cnt / k + 1) * sizeof(int))))
+		exit(ENOMEM);
+
+	for(i = 0; i < k; ++i) {
+		for(j = 0; j * k + i < cnt; ++j)
+			tmp[j] = arr[j * k + i];
+
+		merge_sort(tmp, 0, j - 1);
+
+		for(j = 0; j * k + i < cnt; ++j)
+			arr[j * k + i] = tmp[j];
+	}
+}
+
 void list_show(int *arr, int cnt)
 {
 	int i;
@@ -62,9 +83,9 @@ void list_show(int *arr, int cnt)
 
 int main(int argc, char *argv[])
 {
-	int *arr, i, cnt;
+	int i, k, cnt, *arr;
 
-	scanf("%d", &cnt);
+	scanf("%d%d", &cnt, &k);
 
 	if(!(arr = malloc(cnt * sizeof(int))))
 		exit(ENOMEM);
@@ -72,8 +93,8 @@ int main(int argc, char *argv[])
 	for(i = 0; i < cnt; ++i)
 		scanf("%d", &arr[i]);
 
-	merge_sort(arr, 0, cnt - 1);
-	
+	k_sorted(arr, cnt, k);
+
 	list_show(arr, cnt);
 
 	free(arr);

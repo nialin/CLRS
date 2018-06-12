@@ -11,7 +11,7 @@ struct max_heap{
 
 
 /* For output. */
-int cnts;
+int cnt;
 
 void exchange(int *a, int *b);
 
@@ -35,7 +35,7 @@ void max_heap_creat(struct max_heap *heap)
 	int i;
 
 	scanf("%d", &heap->size);
-	cnts = heap->size;
+	cnt = heap->size;
 
 	for(i = 1; i <= heap->size; ++i)
 		scanf("%d", &heap->data[i]);
@@ -116,7 +116,7 @@ int main(int argc, char *argv[])
 
 	heap_sort(&heap);
 
-	for(i = 1; i <= cnts; ++i)
+	for(i = 1; i <= cnt; ++i)
 		printf("%d ", heap.data[i]);
 
 	printf("\n");

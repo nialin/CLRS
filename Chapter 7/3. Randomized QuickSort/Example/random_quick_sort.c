@@ -9,7 +9,7 @@ void exchange(int *a, int *b);
 int random_partition(int *arr, int low, int high);
 void quick_sort(int *arr, int low, int high);
 
-void list_show(int *arr, int cnts);
+void list_show(int *arr, int cnt);
 
 
 void exchange(int *a, int *b)
@@ -63,18 +63,18 @@ void list_show(int *arr, int len)
 
 int main(int argc, char *argv[])
 {
-	int *arr, i, cnts;
+	int *arr, i, cnt;
 
-	scanf("%d", &cnts);
+	scanf("%d", &cnt);
 
-	if(!(arr = malloc(cnts * sizeof(int))))
+	if(!(arr = malloc(cnt * sizeof(int))))
 		exit(ENOMEM);
 
-	for(i = 0; i < cnts; ++i)
+	for(i = 0; i < cnt; ++i)
 		scanf("%d", &arr[i]);
 
-	quick_sort(arr, 0, cnts - 1);
-	list_show(arr, cnts);
+	quick_sort(arr, 0, cnt - 1);
+	list_show(arr, cnt);
 
 	return EXIT_SUCCESS;
 }
