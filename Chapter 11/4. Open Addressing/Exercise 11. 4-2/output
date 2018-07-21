@@ -1,0 +1,15 @@
+Insert [0] success.
+Insert [4096] success.
+Insert [8192] success.
+Insert [12288] success.
+Insert [1] success.
+Insert [4097] success.
+Search [4096] success.
+Search [8192] success.
+Search [12288] success.
+Search [16384] unsuccess.
+Delete [8192] success.
+Search [12288] success.
+Insert [16384] success.
+Search [16384] success.
+Search [4096] success.

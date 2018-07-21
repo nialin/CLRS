@@ -1,0 +1,15 @@
+Insert [123456] success.
+Insert [65432] success.
+Insert [777] success.
+Insert [0] success.
+Insert [888] success.
+Insert [555] success.
+Insert [1024] success.
+Delete [999] unsuccess.
+Search [1024] success.
+Search [1024] success.
+Delete [0] success.
+Delete [2] unsuccess.
+Delete [1024] success.
+Search [1024] unsuccess.
+Search [123456] success.

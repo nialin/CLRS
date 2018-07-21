@@ -1,0 +1,6 @@
+Delete {[18]} unsucess.
+Insert {[20] 4 fox} success.
+Insert {[15] 4 pig} success.
+Search {[2]} unsucess.
+Search {[15] 4 pig} success.
+Delete {[15] 4 pig} success.

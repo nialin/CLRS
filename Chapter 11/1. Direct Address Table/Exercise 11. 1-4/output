@@ -1,0 +1,11 @@
+Insert abc success.
+Delete bcd unsuccess.
+Insert bcd success.
+Delete abc success.
+Search bcd success.
+Search abc unsuccess.
+Insert abdef unsuccess.
+Delete aaaa unsuccess.
+Insert aaaa success.
+Search aaaa success.
+Search abcdef unsuccess.

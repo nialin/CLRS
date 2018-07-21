@@ -1,0 +1,19 @@
+Search {[66]} unsuccess.
+Delete {[10]} unsuccess.
+Insert {[2], 0, dog} success.
+Search {[2], 0, dog} success.
+Delete {[8]} unsuccess.
+Search {[6]} unsuccess.
+Insert {[2]} unsuccess.
+Insert {[36], 0, appple} success.
+Search {[36], 0, appple} success.
+Delete {[2], 0, dog} success.
+Search {[36], 0, appple} success.
+Search {[2]} unsuccess.
+Insert {[70], 1, book} success.
+Search {[15]} unsuccess.
+Search {[70], 1, book} success.
+Search {[36], 0, appple} success.
+Search {[2]} unsuccess.
+Insert {[5], 1, banana} success.
+Search {[6]} unsuccess.
