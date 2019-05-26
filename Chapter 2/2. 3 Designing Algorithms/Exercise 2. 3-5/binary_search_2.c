@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <errno.h>
 
 
 int binary_search(int *arr, int low, int high, int v);
 
-void list_show(int *arr, int cnt);
+void list_print(int *arr, int cnt);
 
 int compare(const void *a, const void *b);
 
@@ -39,59 +38,25 @@ int binary_search(int *arr, int low, int high, int v)
 	return binary_search(arr, low, mid - 1, v);
 }
 
-void list_show(int *arr, int cnt)
-{
-	int i;
-
-	for(i = 0; i < cnt; ++i)
-		printf("[%d] %d\n", i, arr[i]);
-}
-
 int compare(const void *a, const void *b)
 {
 	return (*(int *)a - *(int *)b);
 }
 
-/*
- * Debug Format:
- *	Input File:
- *		Function Data
- *		Function :
- *			#1 Search
- *			#0 Exit
- *
- *	Output File:
- *		-Found		: Data is found, its pos is Pos.
- *		-Not Found	: Data is not found.
- */
-int main(int argc, char *argv[])
+int main()
 {
-	int choice, rslt;
-	int *arr, i, cnt, v;
+	int i, cnt, v, *arr;
 
-	scanf("%d", &cnt);
+	scanf("%d%d", &cnt, &v);
 
-	if(!(arr = malloc(cnt * sizeof(int))))
-		exit(ENOMEM);
+	arr = malloc(cnt * sizeof(int));
 
 	for(i = 0; i < cnt; ++i)
 		scanf("%d", &arr[i]);
 
 	qsort(arr, cnt, sizeof(int), compare);
 
-	list_show(arr, cnt);
+	printf("%d is%s found.\n", v, -1 == binary_search(arr, 0, cnt - 1, v) ? "n't" : "");
 
-	while(scanf("%d", &choice) != EOF && 1 == choice) {
-		scanf("%d", &v);
-		rslt = binary_search(arr, 0, cnt - 1, v);
-
-		if(-1 == rslt)
-			printf("%d is not found.\n", v);
-		else
-			printf("%d is found, its pos is %d.\n", v, rslt);
-	}
-
-	free(arr);
-
-	return EXIT_SUCCESS;
+	return 0;
 }

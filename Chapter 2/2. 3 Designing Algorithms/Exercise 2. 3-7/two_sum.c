@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <errno.h>
 
 #define TRUE	(1 == 1)
 #define FALSE	(!TRUE)
@@ -59,21 +58,18 @@ int two_sum(int *arr, int cnt, int x)
 	return FALSE;
 }
 
-int main(int argc, char *argv[])
+int main()
 {
-	int *arr, i, cnt, x;
+	int i, cnt, x, *arr;
 
 	scanf("%d%d", &cnt, &x);
 
-	if(!(arr = malloc(cnt * sizeof(int))))
-		exit(ENOMEM);
+	arr = malloc(cnt * sizeof(int));
 
 	for(i = 0; i < cnt; ++i)
 		scanf("%d", &arr[i]);
 
 	printf("%s\n", two_sum(arr, cnt, x) ? "Exist" : "Not Exist");
 
-	free(arr);
-
-	return EXIT_SUCCESS;
+	return 0;
 }

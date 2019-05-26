@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <errno.h>
 
 
 void selection_sort(int *arr, int cnt);
-void list_show(int *arr, int cnt);
+void list_print(int *arr, int cnt);
 
 
 void selection_sort(int *arr, int cnt)
@@ -23,7 +22,7 @@ void selection_sort(int *arr, int cnt)
 	}
 }
 
-void list_show(int *arr, int cnt)
+void list_print(int *arr, int cnt)
 {
 	int i;
 
@@ -33,23 +32,20 @@ void list_show(int *arr, int cnt)
 	printf("\n");
 }
 
-int main(int argc, char *argv[])
+int main()
 {
-	int *arr, i, cnt;
+	int i, cnt, *arr;
 
 	scanf("%d", &cnt);
 
-	if(!(arr = malloc(cnt * sizeof(int))))
-		exit(ENOMEM);
+	arr = malloc(cnt * sizeof(int));
 
 	for(i = 0; i < cnt; ++i)
 		scanf("%d", &arr[i]);
 
 	selection_sort(arr, cnt);
 
-	list_show(arr, cnt);
+	list_print(arr, cnt);
 
-	free(arr);
-
-	return EXIT_SUCCESS;
+	return 0;
 }

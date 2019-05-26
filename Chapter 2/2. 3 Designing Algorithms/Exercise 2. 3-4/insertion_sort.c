@@ -1,12 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <errno.h>
 
 
 void insert(int *arr, int cnt, int e);
 void insertion_sort(int *arr, int cnt);
 
-void list_show(int *arr, int cnt);
+void list_print(int *arr, int cnt);
 
 
 /*
@@ -39,7 +38,7 @@ void insertion_sort(int *arr, int cnt)
 	}
 }
 
-void list_show(int *arr, int cnt)
+void list_print(int *arr, int cnt)
 {
 	int i;
 
@@ -51,21 +50,18 @@ void list_show(int *arr, int cnt)
 
 int main(int argc, char *argv[])
 {
-	int *arr, i, cnt;
+	int i, cnt, *arr;
 
 	scanf("%d", &cnt);
 
-	if(!(arr = malloc(cnt * sizeof(int))))
-		exit(ENOMEM);
+	arr = malloc(cnt * sizeof(int));
 
 	for(i = 0; i < cnt; ++i)
 		scanf("%d", &arr[i]);
 
 	insertion_sort(arr, cnt);
 
-	list_show(arr, cnt);
+	list_print(arr, cnt);
 
-	free(arr);
-
-	return EXIT_SUCCESS;
+	return 0;
 }
