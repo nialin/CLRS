@@ -5,7 +5,6 @@
 #define FALSE	(!TRUE)
 
 
-
 int binary_search(int *arr, int low, int high, int v);
 
 int compare(const void *a, const void *b);

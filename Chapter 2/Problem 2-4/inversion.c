@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
-#include <errno.h>
 
 
 int merge_inversion(int *arr, int low, int mid, int high);
@@ -11,70 +10,55 @@ int inversion(int *arr, int low, int high);
 
 int merge_inversion(int *arr, int low, int mid, int high)
 {
-	int i, rslt = 0;
-	int *left, *right, len_1, len_2, index_1, index_2;
+	int i, *left_buf, *right_buf, left, right, left_cnt, right_cnt, rslt;
 
-	len_1 = mid - low + 1;
-	len_2 = high - mid;
+	left_cnt = mid - low + 1;
+	right_cnt = high - mid;
 
-	if(!(left = malloc((len_1 + 1) * sizeof(int))))
-		exit(ENOMEM);
+	left_buf = malloc((left_cnt + 1) * sizeof(int));
+	memcpy(left_buf, &arr[low], left_cnt * sizeof(int));
+	left_buf[left_cnt] = INT_MAX;
 
-	if(!(right = malloc((len_2 + 1) * sizeof(int))))
-		exit(ENOMEM);
+	right_buf = malloc((right_cnt + 1) * sizeof(int));
+	memcpy(right_buf, &arr[mid + 1], right_cnt * sizeof(int));
+	right_buf[right_cnt] = INT_MAX;
 
-	memcpy(left, &arr[low], len_1 * sizeof(int));
-	memcpy(right, &arr[mid + 1], len_2 * sizeof(int));
-
-	left[len_1] = INT_MAX;
-	right[len_2] = INT_MAX;
-
-	for(i = low, index_1 = index_2 = 0; i <= high; ++i) {
-		if(left[index_1] <= right[index_2])
-			arr[i] = left[index_1++];
+	for(i = low, left = right = 0, rslt = 0; i <= high; ++i) {
+		if(left_buf[left] < right_buf[right])
+			arr[i] = left_buf[left++];
 		else {
-			rslt += len_1 - index_1;
-			arr[i] = right[index_2++];
+			rslt += left_cnt - left;
+			arr[i] = right_buf[right++];
 		}
 	}
-
-	free(left);
-	free(right);
 
 	return rslt;
 }
 
 int inversion(int *arr, int low, int high)
 {
-	int mid, rslt = 0;
+	int mid;
 
-	if(low < high) {
-		mid = (low + high) / 2;
+	if(low >= high)
+		return 0;
 
-		rslt += inversion(arr, low, mid);
-		rslt += inversion(arr, mid + 1, high);
+	mid = (low + high) / 2;
 
-		rslt += merge_inversion(arr, low, mid, high);
-	}
-
-	return rslt;
+	return inversion(arr, low, mid) + inversion(arr, mid + 1, high) + merge_inversion(arr, low, mid, high);
 }
 
-int main(int argc, char *argv[])
+int main()
 {
-	int *arr, i, cnt;
+	int i, cnt, *arr;
 
 	scanf("%d", &cnt);
 
-	if(!(arr = malloc(cnt * sizeof(int))))
-		exit(ENOMEM);
+	arr = malloc(cnt * sizeof(int));
 
 	for(i = 0; i < cnt; ++i)
 		scanf("%d", &arr[i]);
 
-	printf("Inversion = %d\n", inversion(arr, 0, cnt - 1));
+	printf("%d\n", inversion(arr, 0, cnt - 1));
 
-	free(arr);
-
-	return EXIT_SUCCESS;
+	return 0;
 }

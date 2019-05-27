@@ -3,9 +3,14 @@
 #include <string.h>
 #include <limits.h>
 
+#define K 3
+
 
 void merge(int *arr, int low, int mid, int high);
+
+void insertion_sort(int *arr, int cnt);
 void merge_sort(int *arr, int low, int high);
+
 void list_print(int *arr, int cnt);
 
 
@@ -16,16 +21,28 @@ void merge(int *arr, int low, int mid, int high)
 	left = mid - low + 1;
 	right = high - mid;
 
-	left_buf = malloc((left + 1) * sizeof(int));
+	left_buf = malloc(left * sizeof(int));
 	memcpy(left_buf, &arr[low], left * sizeof(int));
 	left_buf[left] = INT_MAX;
 
-	right_buf = malloc((right + 1) * sizeof(int));
+	right_buf = malloc(right * sizeof(int));
 	memcpy(right_buf, &arr[mid + 1], right * sizeof(int));
 	right_buf[right] = INT_MAX;
 
-	for(i = low, left = right = 0; i <= high; )
-		arr[i++] = left_buf[left] < right_buf[right] ? left_buf[left++] : right_buf[right++];
+	for(i = low, left = right = 0; i <= high; ++i)
+		arr[i] = left_buf[left] < right_buf[right] ? left_buf[left++] : right_buf[right++];
+}
+
+void insertion_sort(int *arr, int cnt)
+{
+	int i, j, key;
+
+	for(j = 1; j < cnt; ++j) {
+		for(i = j - 1, key = arr[j]; i >= 0 && key < arr[i]; --i)
+			arr[i + 1] = arr[i];
+
+		arr[i + 1] = key;
+	}
 }
 
 void merge_sort(int *arr, int low, int high)
@@ -35,8 +52,15 @@ void merge_sort(int *arr, int low, int high)
 	if(low < high) {
 		mid = (low + high) / 2;
 
-		merge_sort(arr, low, mid);
-		merge_sort(arr, mid + 1, high);
+		if(mid - low + 1 > K)
+			merge_sort(arr, low, mid);
+		else
+			insertion_sort(&arr[low], mid - low + 1);
+
+		if(high - mid > K)
+			merge_sort(arr, mid + 1, high);
+		else
+			insertion_sort(&arr[mid + 1], high - mid);
 
 		merge(arr, low, mid, high);
 	}
